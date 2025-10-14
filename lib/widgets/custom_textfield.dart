@@ -46,11 +46,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
             : null,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: const Color.fromARGB(255, 8, 6, 6), width: 2),
+          borderSide: BorderSide(color:  Color.fromARGB(255, 75, 22, 219), width: 2),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: const Color.fromARGB(255, 5, 5, 7), width: 2),
+          borderSide: BorderSide(color:  Color.fromARGB(255, 75, 22, 219), width: 2),
         ),
         fillColor: Colors.green[700]?.withOpacity(0.2),
         filled: true,
@@ -58,3 +58,4 @@ class _CustomTextFieldState extends State<CustomTextField> {
     );
   }
 }
+//Color.fromARGB(255, 75, 22, 219)

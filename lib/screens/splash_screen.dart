@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
 import 'dart:async';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -52,6 +53,12 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
             const SizedBox(height: 20),
+            LoadingAnimationWidget.twistingDots(
+              leftDotColor: const Color(0xFF1A1A3F),
+              rightDotColor: const Color(0xFFEA3799),
+              size: 50,
+            ),
+            const SizedBox(height: 20),
             const Text(
               "Football Ticket App", 
               style: TextStyle(
@@ -63,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen>
             ),
             const SizedBox(height: 10),
             const Text(
-              "CRATED BY ROR",
+              "CREATED BY ROR",
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.white70,

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 class MyTheme {
   static ThemeData darkRedTheme = ThemeData(
-    primaryColor: Colors.red.shade800,
-    scaffoldBackgroundColor: const Color.fromARGB(255, 250, 250, 250),
-    appBarTheme: AppBarTheme(
-      backgroundColor: Colors.red.shade900,
+    primaryColor: const Color(0xFF3F0FB7),
+    scaffoldBackgroundColor: Colors.white,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Color(0xFF3F0FB7),
       foregroundColor: Colors.white,
+      elevation: 0,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(

@@ -19,7 +19,7 @@ class TicketDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(match),
-        backgroundColor: Colors.redAccent,
+        backgroundColor:Color.fromARGB(255, 29, 45, 190),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -31,7 +31,7 @@ class TicketDetailScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.sports_soccer, size: 50, color: Colors.redAccent),
+                const Icon(Icons.sports_soccer, size: 50, color: Color.fromARGB(255, 0, 0, 0)),
                 const SizedBox(height: 20),
                 Text("Match: $match", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 8),

@@ -19,16 +19,16 @@ class RegisterScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            const SizedBox(height: 30),
-            const Icon(Icons.sports_soccer,
+             SizedBox(height: 30),
+             Icon(Icons.sports_soccer,
                 size: 60, color: Color.fromARGB(255, 0, 0, 0)),
-            const SizedBox(height: 15),
-            const Text(
+             SizedBox(height: 15),
+            Text(
               "Create Account",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Colors.redAccent,
+                color: Color.fromARGB(255, 75, 22, 219)
               ),
             ),
             const SizedBox(height: 30),
@@ -86,7 +86,7 @@ class RegisterScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (_) => LoginScreen()),
                 );
               },
-              child: const Text("Register"),
+              child: Text("Register"),
             ),
             TextButton(
               onPressed: () {
@@ -95,9 +95,9 @@ class RegisterScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (_) => LoginScreen()),
                 );
               },
-              child: const Text(
+              child: Text(
                 "Already have an account? Login",
-                style: TextStyle(color: Colors.redAccent),
+                style: TextStyle(color: Color.fromARGB(255, 75, 22, 219)),
               ),
             ),
           ],

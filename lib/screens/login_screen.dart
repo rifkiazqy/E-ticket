@@ -13,14 +13,22 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Login")),
+      // 🔹 AppBar dengan warna biru dan teks putih
+      appBar: AppBar(
+        title: const Text("Login"),
+        backgroundColor: const Color.fromARGB(255, 17, 2, 153),
+        foregroundColor: Colors.white,
+      ),
+
+      // 🔹 Background gambar
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/bacground.png'),
+            image: AssetImage('assets/images/background.png'),
             fit: BoxFit.cover,
           ),
         ),
+
         child: Center(
           child: SingleChildScrollView(
             child: SizedBox(
@@ -54,18 +62,22 @@ class LoginScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.redAccent,
+                          color: Color.fromARGB(255, 40, 0, 184),
                           letterSpacing: 2,
                         ),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 18),
+
+                      // 🔹 Input Email
                       CustomTextField(
                         controller: emailController,
                         label: "Email",
                         prefixIcon: Icons.email,
                       ),
                       const SizedBox(height: 12),
+
+                      // 🔹 Input Password
                       CustomTextField(
                         controller: passwordController,
                         label: "Password",
@@ -73,6 +85,8 @@ class LoginScreen extends StatelessWidget {
                         prefixIcon: Icons.lock,
                       ),
                       const SizedBox(height: 18),
+
+                      // 🔹 Tombol Login
                       ElevatedButton(
                         onPressed: () {
                           String email = emailController.text.trim();
@@ -100,14 +114,29 @@ class LoginScreen extends StatelessWidget {
                             );
                           }
                         },
+
+                        // 🎨 Ganti warna tombol login di sini
                         style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 29, 46, 194), // merah tua
+                          foregroundColor: Colors.white, // warna teks
                           minimumSize: const Size(double.infinity, 40),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: const Text("Login"),
+
+                        child: const Text(
+                          "Login",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
+                      const SizedBox(height: 8),
+
+                      // 🔹 Tombol ke Register
                       TextButton(
                         onPressed: () {
                           Navigator.push(
@@ -119,7 +148,8 @@ class LoginScreen extends StatelessWidget {
                         },
                         child: const Text(
                           "Don't have an account? Register",
-                          style: TextStyle(color: Colors.redAccent),
+                          style:
+                              TextStyle(color: Color.fromARGB(255, 75, 22, 219)),
                         ),
                       ),
                     ],
