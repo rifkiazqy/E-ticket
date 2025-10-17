@@ -1,183 +1,118 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:animations/animations.dart';
 import 'ticket_list_screen.dart';
-import 'login_screen.dart';
-
-
+import '../providers/cart_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   final String username;
+
+  HomeScreen({super.key, required this.username});
+
   final List<Map<String, dynamic>> competitions = [
     {
       "title": "UEFA Champions League",
       "icon": "assets/images/ucl.png",
       "matches": [
-        {
-          "match": "Real Madrid vs Barcelona",
-          "date": "25 September 2025",
-          "stadium": "Santiago Bernabeu",
-          "seats": "15,000"
-        },
-        {
-          "match": "Bayern vs Man City",
-          "date": "26 September 2025",
-          "stadium": "Allianz Arena",
-          "seats": "13,500"
-        },
-        {
-          "match": "Liverpool vs PSG",
-          "date": "27 September 2025",
-          "stadium": "Anfield",
-          "seats": "12,000"
-        },
-        {
-          "match": "Inter Milan vs Chelsea",
-          "date": "28 September 2025",
-          "stadium": "San Siro",
-          "seats": "14,200"
-        },
+        {"match": "Real Madrid vs Barcelona", "date": "25 Sep 2025", "stadium": "Santiago Bernabeu", "seats": "15,000"},
+        {"match": "Bayern vs Man City", "date": "26 Sep 2025", "stadium": "Allianz Arena", "seats": "13,500"},
+        {"match": "Liverpool vs PSG", "date": "27 Sep 2025", "stadium": "Anfield", "seats": "12,000"},
+        {"match": "Inter Milan vs Chelsea", "date": "28 Sep 2025", "stadium": "San Siro", "seats": "14,200"},
       ]
     },
     {
       "title": "UEFA Europa League",
       "icon": "assets/images/uefa.png",
       "matches": [
-        {
-          "match": "Roma vs Sevilla",
-          "date": "29 September 2025",
-          "stadium": "Stadio Olimpico",
-          "seats": "10,000"
-        },
-        {
-          "match": "Arsenal vs Villarreal",
-          "date": "30 September 2025",
-          "stadium": "Emirates Stadium",
-          "seats": "11,500"
-        },
-        {
-          "match": "Betis vs Atalanta",
-          "date": "1 Oktober 2025",
-          "stadium": "Benito Villamarin",
-          "seats": "9,000"
-        },
+        {"match": "Roma vs Sevilla", "date": "29 Sep 2025", "stadium": "Stadio Olimpico", "seats": "10,000"},
+        {"match": "Arsenal vs Villarreal", "date": "30 Sep 2025", "stadium": "Emirates Stadium", "seats": "11,500"},
+        {"match": "Betis vs Atalanta", "date": "1 Okt 2025", "stadium": "Benito Villamarin", "seats": "9,000"},
       ]
     },
     {
       "title": "FIFA World Cup",
       "icon": "assets/images/pildun.png",
       "matches": [
-        {
-          "match": "Brazil vs Argentina",
-          "date": "2 Oktober 2025",
-          "stadium": "Maracana",
-          "seats": "50,000"
-        },
-        {
-          "match": "France vs Germany",
-          "date": "3 Oktober 2025",
-          "stadium": "Berlin Stadium",
-          "seats": "48,000"
-        },
-        {
-          "match": "Spain vs Portugal",
-          "date": "4 Oktober 2025",
-          "stadium": "Camp Nou",
-          "seats": "52,000"
-        },
-        {
-          "match": "England vs Netherlands",
-          "date": "5 Oktober 2025",
-          "stadium": "Wembley",
-          "seats": "49,500"
-        },
+        {"match": "Brazil vs Argentina", "date": "2 Okt 2025", "stadium": "Maracana", "seats": "50,000"},
+        {"match": "France vs Germany", "date": "3 Okt 2025", "stadium": "Berlin Stadium", "seats": "48,000"},
+        {"match": "Spain vs Portugal", "date": "4 Okt 2025", "stadium": "Camp Nou", "seats": "52,000"},
+        {"match": "England vs Netherlands", "date": "5 Okt 2025", "stadium": "Wembley", "seats": "49,500"},
       ]
     },
     {
       "title": "Timnas Indonesia",
       "icon": "assets/images/king.png",
       "matches": [
-        {
-          "match": "Indonesia vs Malaysia",
-          "date": "6 Oktober 2025",
-          "stadium": "GBK",
-          "seats": "60,000"
-        },
-        {
-          "match": "Indonesia vs Thailand",
-          "date": "7 Oktober 2025",
-          "stadium": "GBK",
-          "seats": "60,000"
-        },
+        {"match": "Indonesia vs Malaysia", "date": "6 Okt 2025", "stadium": "GBK", "seats": "60,000"},
+        {"match": "Indonesia vs Thailand", "date": "7 Okt 2025", "stadium": "GBK", "seats": "60,000"},
       ]
     },
   ];
 
-  HomeScreen({super.key, required this.username});
-
-  Widget _buildCompetitionCard(String title, String iconPath) {
-    return Card(
-      elevation: 4,
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+  Widget _buildCompetitionCard(BuildContext context, String title, String iconPath, List matches) {
+    return OpenContainer(
+      closedElevation: 4,
+      closedColor: Colors.white,
+      closedShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      transitionType: ContainerTransitionType.fadeThrough,
+      openBuilder: (context, _) => TicketListScreen(
+        competitionName: title,
+        matches: List<Map<String, String>>.from(matches),
       ),
-      child: Container(
-        width: 160,
-        height: 160,
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              iconPath,
-              width: 100,
-              height: 100,
-              fit: BoxFit.contain,
-            ),
-          ],
+      closedBuilder: (context, openContainer) => GestureDetector(
+        onTap: openContainer,
+        child: Container(
+          width: 160,
+          height: 160,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: Colors.white,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(iconPath, width: 80, height: 80),
+              const SizedBox(height: 10),
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget _buildActionCard(BuildContext context, String title, IconData icon, Color color) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Material(
-        color: Colors.white,
+    return Container(
+      width: double.infinity,
+      child: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
           onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('$title coming soon!'),
-                duration: const Duration(seconds: 2),
-              ),
-            );
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('$title coming soon!'),
+              duration: const Duration(seconds: 2),
+            ));
           },
           child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(icon, size: 32, color: color),
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(color: color.withOpacity(0.15), shape: BoxShape.circle),
+                  child: Icon(icon, size: 28, color: color),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(width: 16),
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ],
             ),
@@ -194,14 +129,9 @@ class HomeScreen extends StatelessWidget {
         title: const Text("Logout"),
         content: const Text("Are you sure you want to logout?"),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"),
-          ),
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF3F0FB7),
-            ),
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.blue.shade900),
             onPressed: () {
               Navigator.pop(context);
               Navigator.pushReplacementNamed(context, '/login');
@@ -215,266 +145,160 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    final mainColor = Colors.blue.shade900;
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF3F0FB7),
-        elevation: 0,
-        title: Row(
-          children: [
-            const Text(
-              'Football Ticket',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+        backgroundColor: mainColor,
+        title: const Text("Football Ticket", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        actions: [
+          Stack(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.shopping_cart, color: Colors.white),
+                onPressed: () => Navigator.pushNamed(context, '/cart'),
               ),
-            ),
-            const Spacer(),
-            const Icon(Icons.person, size: 22, color: Colors.white),
-            const SizedBox(width: 6),
-            Flexible(
-              child: Text(
-                "Welcome, $username",
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
+              Consumer<CartProvider>(
+                builder: (context, cart, _) => Positioned(
+                  right: 8,
+                  top: 8,
+                  child: cart.itemCount == 0
+                      ? const SizedBox()
+                      : Container(
+                          padding: const EdgeInsets.all(2),
+                          decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(10)),
+                          constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+                          child: Text('${cart.itemCount}', style: const TextStyle(color: Colors.white, fontSize: 10)),
+                        ),
                 ),
-                overflow: TextOverflow.ellipsis,
               ),
-            ),
-          ],
-        ),
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.menu, color: Colors.white),
-            onPressed: () => Scaffold.of(context).openDrawer(),
+            ],
           ),
-        ),
+          const SizedBox(width: 10),
+          const Icon(Icons.person, color: Colors.white),
+          const SizedBox(width: 5),
+          Text("Hi, $username", style: const TextStyle(color: Colors.white, fontSize: 16)),
+          const SizedBox(width: 12),
+        ],
       ),
+
+      // 🔹 Drawer Menu
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              decoration: const BoxDecoration(
-                color: Color(0xFF3F0FB7),
-                image: DecorationImage(
+              decoration: BoxDecoration(
+                color: mainColor,
+                image: const DecorationImage(
                   image: AssetImage('assets/images/ucl.png'),
                   fit: BoxFit.cover,
                   opacity: 0.2,
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 30,
-                    child: Icon(
-                      Icons.person,
-                      size: 35,
-                      color: Color(0xFF3F0FB7),
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const CircleAvatar(
+                      radius: 28,
+                      backgroundColor: Colors.white,
+                      child: Icon(Icons.person, size: 35, color: Colors.blue),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    username,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const Text(
-                    'Football Fan',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    Text(username,
+                        style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                    const Text("Football Fan", style: TextStyle(color: Colors.white70, fontSize: 14)),
+                  ],
+                ),
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.confirmation_number, color: Color.fromARGB(255, 31, 5, 148)),
-              title: const Text('My Tickets'),
-              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-              onTap: () {
-                Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('My Tickets coming soon!'),
-                    duration: Duration(seconds: 2),
-                  ),
-                );
-              },
+              leading: const Icon(Icons.confirmation_number, color: Colors.blue),
+              title: const Text("My Tickets"),
+              onTap: () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Coming soon!"))),
             ),
             ListTile(
-              leading: const Icon(Icons.event, color: Color.fromARGB(255, 20, 7, 131)),
-              title: const Text('Upcoming Matches'),
-              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-              onTap: () {
-                Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Upcoming Matches coming soon!'),
-                    duration: Duration(seconds: 2),
-                  ),
-                );
-              },
+              leading: const Icon(Icons.event, color: Colors.orange),
+              title: const Text("Upcoming Matches"),
+              onTap: () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Coming soon!"))),
             ),
             ListTile(
-              leading: const Icon(Icons.account_circle, color: Color.fromARGB(255, 32, 10, 160)),
-              title: const Text('Profile'),
-              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-              onTap: () {
-                Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Profile coming soon!'),
-                    duration: Duration(seconds: 2),
-                  ),
-                );
-              },
+              leading: const Icon(Icons.person, color: Colors.green),
+              title: const Text("Profile"),
+              onTap: () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Coming soon!"))),
             ),
             const Divider(),
             ListTile(
-              leading: const Icon(Icons.logout, color: Color.fromARGB(255, 8, 6, 155)),
-              title: const Text('Logout'),
-              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-              onTap: () {
-                Navigator.pop(context);
-                _showLogoutDialog(context);
-              },
+              leading: const Icon(Icons.logout, color: Colors.red),
+              title: const Text("Logout"),
+              onTap: () => _showLogoutDialog(context),
             ),
           ],
         ),
       ),
+
+      // 🔹 Body utama
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // 🔸 Bagian Kompetisi
             Container(
               height: 300,
-              decoration: const BoxDecoration(
-                color: Color(0xFF3F0FB7),
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: mainColor,
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(30),
                   bottomRight: Radius.circular(30),
                 ),
               ),
-              child: Stack(
-                children: [
-                  const Positioned(
-                    right: -30,
-                    bottom: -30,
-                    child: Icon(
-                      Icons.sports_soccer,
-                      size: 200,
-                      color: Colors.white10,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Featured Competitions",
+                        style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 20),
+                    Expanded(
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: competitions.length,
+                        itemBuilder: (context, index) {
+                          final comp = competitions[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 16),
+                            child: _buildCompetitionCard(
+                              context,
+                              comp["title"],
+                              comp["icon"],
+                              comp["matches"],
+                            ),
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Featured Competitions',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Container(
-                          height: 180,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: competitions.length,
-                            itemBuilder: (context, index) {
-                              final comp = competitions[index];
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => TicketListScreen(
-                                          competitionName: comp["title"],
-                                          matches: List<Map<String, String>>.from(
-                                              comp["matches"]),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: _buildCompetitionCard(
-                                    comp["title"],
-                                    comp["icon"],
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
+
+            // 🔸 Quick Actions Full Width
             Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Quick Actions',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  const Text("Quick Actions",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87)),
                   const SizedBox(height: 16),
-                  GridView.count(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 16,
-                    crossAxisSpacing: 16,
-                    children: [
-                      _buildActionCard(
-                        context,
-                        'My Tickets',
-                        Icons.confirmation_number,
-                        Colors.blue,
-                      ),
-                      _buildActionCard(
-                        context,
-                        'Upcoming Matches',
-                        Icons.event,
-                        Colors.orange,
-                      ),
-                      _buildActionCard(
-                        context,
-                        'Profile',
-                        Icons.person,
-                        Colors.green,
-                      ),
-                      _buildActionCard(
-                        context,
-                        'Settings',
-                        Icons.settings,
-                        Colors.purple,
-                      ),
-                    ],
-                  ),
+                  _buildActionCard(context, "My Tickets", Icons.confirmation_number, Colors.blue),
+                  _buildActionCard(context, "Upcoming Matches", Icons.event, Colors.orange),
+                  _buildActionCard(context, "Profile", Icons.person, Colors.green),
+                  _buildActionCard(context, "Settings", Icons.settings, Colors.purple),
                 ],
               ),
             ),

@@ -91,7 +91,15 @@ class TicketListScreen extends StatelessWidget {
                             Expanded(
                               child: Column(
                                 children: [
-                                  const Icon(Icons.sports_soccer, size: 40),
+                                  Image.asset(
+                                    'assets/images/club/${match["match"]?.split(" vs ")[0].toLowerCase().replaceAll(" ", "_")}.png',
+                                    width: 40,
+                                    height: 40,
+                                    fit: BoxFit.contain,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return const Icon(Icons.sports_soccer, size: 40);
+                                    },
+                                  ),
                                   const SizedBox(height: 8),
                                   Text(
                                     match["match"]?.split(" vs ")[0] ?? "",
@@ -125,7 +133,15 @@ class TicketListScreen extends StatelessWidget {
                             Expanded(
                               child: Column(
                                 children: [
-                                  const Icon(Icons.sports_soccer, size: 40),
+                                  Image.asset(
+                                    'assets/images/club/${match["match"]?.split(" vs ")[1].toLowerCase().replaceAll(" ", "_")}.png',
+                                    width: 40,
+                                    height: 40,
+                                    fit: BoxFit.contain,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return const Icon(Icons.sports_soccer, size: 40);
+                                    },
+                                  ),
                                   const SizedBox(height: 8),
                                   Text(
                                     match["match"]?.split(" vs ")[1] ?? "",
