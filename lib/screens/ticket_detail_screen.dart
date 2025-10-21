@@ -10,7 +10,7 @@ class TicketDetailScreen extends StatelessWidget {
   final String date;
   final String stadium;
   final String seats;
-  final double price = 500000; // Default price per ticket
+  final double price = 500000; 
 
   const TicketDetailScreen({
     super.key,
@@ -39,7 +39,7 @@ class TicketDetailScreen extends StatelessWidget {
               children: [
                 const Icon(Icons.sports_soccer, size: 50, color: Color.fromARGB(255, 0, 0, 0)),
                 const SizedBox(height: 20),
-                Text("Match: $match", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                Text("Match: $match", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Color.fromARGB(255, 0, 0, 0))),
                 const SizedBox(height: 8),
                 Text("Date: $date", style: const TextStyle(fontSize: 16, color: Colors.black87)),
                 Text("Stadium: $stadium", style: const TextStyle(fontSize: 16, color: Colors.black87)),
