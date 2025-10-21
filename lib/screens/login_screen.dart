@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:getwidget/getwidget.dart';
 import '../data/user_data.dart';
 import 'register_screen.dart';
 import 'home_screen.dart';
@@ -87,7 +88,7 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(height: 18),
 
                       // 🔹 Tombol Login
-                      ElevatedButton(
+                      GFButton(
                         onPressed: () {
                           String email = emailController.text.trim();
                           String password = passwordController.text.trim();
@@ -114,30 +115,21 @@ class LoginScreen extends StatelessWidget {
                             );
                           }
                         },
-
-                        // 🎨 Ganti warna tombol login di sini
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 29, 46, 194), // merah tua
-                          foregroundColor: Colors.white, // warna teks
-                          minimumSize: const Size(double.infinity, 40),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                        text: "Login",
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
-
-                        child: const Text(
-                          "Login",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        size: GFSize.LARGE,
+                        fullWidthButton: true,
+                        color: const Color(0xFF3F0FB7),
+                        type: GFButtonType.solid,
+                        shape: GFButtonShape.pills,
                       ),
                       const SizedBox(height: 8),
 
-                      // 🔹 Tombol ke Register
-                      TextButton(
+                      // 🔹 Tombol ke Register dengan GFButton
+                      GFButton(
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -146,11 +138,13 @@ class LoginScreen extends StatelessWidget {
                             ),
                           );
                         },
-                        child: const Text(
-                          "Don't have an account? Register",
-                          style:
-                              TextStyle(color: Color.fromARGB(255, 75, 22, 219)),
+                        text: "Don't have an account? Register",
+                        textStyle: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
                         ),
+                        type: GFButtonType.transparent,
+                        color: const Color(0xFF3F0FB7),
                       ),
                     ],
                   ),

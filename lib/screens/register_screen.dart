@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:getwidget/getwidget.dart';
 import '../models/user.dart';
 import '../data/user_data.dart';
 import 'login_screen.dart';
@@ -51,7 +52,7 @@ class RegisterScreen extends StatelessWidget {
               prefixIcon: Icons.lock,
             ),
             const SizedBox(height: 30),
-            ElevatedButton(
+            GFButton(
               onPressed: () {
                 String name = nameController.text.trim();
                 String email = emailController.text.trim();
@@ -86,19 +87,31 @@ class RegisterScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (_) => LoginScreen()),
                 );
               },
-              child: Text("Register"),
+              text: "Register",
+              textStyle: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+              size: GFSize.LARGE,
+              fullWidthButton: true,
+              color: const Color(0xFF3F0FB7),
+              type: GFButtonType.solid,
+              shape: GFButtonShape.pills,
             ),
-            TextButton(
+            const SizedBox(height: 16),
+            GFButton(
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (_) => LoginScreen()),
                 );
               },
-              child: Text(
-                "Already have an account? Login",
-                style: TextStyle(color: Color.fromARGB(255, 75, 22, 219)),
+              text: "Already have an account? Login",
+              textStyle: const TextStyle(
+                fontSize: 14,
+                color: Color(0xFF3F0FB7),
               ),
+              type: GFButtonType.transparent,
             ),
           ],
         ),

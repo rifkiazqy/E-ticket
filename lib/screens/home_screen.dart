@@ -1,13 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:animations/animations.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../utils/preferences_helper.dart';
 import 'ticket_list_screen.dart';
 import '../providers/cart_provider.dart';
+import 'web_view_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final String username;
 
-  HomeScreen({super.key, required this.username});
+  const HomeScreen({
+    Key? key,
+    required this.username,
+  }) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  String? _deviceInfo;
+  final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+
+  @override
+  void initState() {
+    super.initState();
+    _getDeviceInfo();
+    _saveUserData();
+  }
+
+  Future<void> _saveUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final helper = PreferencesHelper(prefs: prefs);
+    await helper.saveUser(widget.username);
+  }
+
+  Future<void> _getDeviceInfo() async {
+    try {
+      final androidInfo = await deviceInfo.androidInfo;
+      setState(() {
+        _deviceInfo = '${androidInfo.brand} ${androidInfo.model}\\n'
+                     'Android ${androidInfo.version.release}';
+      });
+    } catch (e) {
+      setState(() {
+        _deviceInfo = 'Could not get device info';
+      });
+    }
+  }
 
   final List<Map<String, dynamic>> competitions = [
     {
@@ -177,7 +220,7 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(width: 10),
           const Icon(Icons.person, color: Colors.white),
           const SizedBox(width: 5),
-          Text("Hi, $username", style: const TextStyle(color: Colors.white, fontSize: 16)),
+          Text("Hi, ${widget.username}", style: const TextStyle(color: Colors.white, fontSize: 16)),
           const SizedBox(width: 12),
         ],
       ),
@@ -208,8 +251,11 @@ class HomeScreen extends StatelessWidget {
                       child: Icon(Icons.person, size: 35, color: Colors.blue),
                     ),
                     const SizedBox(height: 8),
-                    Text(username,
+                    Text(widget.username,
                         style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                    if (_deviceInfo != null)
+                      Text(_deviceInfo!,
+                          style: const TextStyle(color: Colors.white70, fontSize: 12)),
                     const Text("Football Fan", style: TextStyle(color: Colors.white70, fontSize: 14)),
                   ],
                 ),
@@ -296,7 +342,51 @@ class HomeScreen extends StatelessWidget {
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87)),
                   const SizedBox(height: 16),
                   _buildActionCard(context, "My Tickets", Icons.confirmation_number, Colors.blue),
-                  _buildActionCard(context, "Upcoming Matches", Icons.event, Colors.orange),
+                  Container(
+                    width: double.infinity,
+                    child: Card(
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(16),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => WebViewScreen(
+                                url: "https://www.bola.net/jadwal-pertandingan/",
+                                title: "Jadwal Pertandingan",
+                              ),
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.orange.withOpacity(0.15),
+                                  shape: BoxShape.circle
+                                ),
+                                child: Icon(Icons.event, size: 28, color: Colors.orange),
+                              ),
+                              const SizedBox(width: 16),
+                              Text(
+                                "Upcoming Matches",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   _buildActionCard(context, "Profile", Icons.person, Colors.green),
                   _buildActionCard(context, "Settings", Icons.settings, Colors.purple),
                 ],

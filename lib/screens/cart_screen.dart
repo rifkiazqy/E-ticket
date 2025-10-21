@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
 import '../models/cart_item.dart';
+import '../utils/currency_formatter.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -16,10 +17,13 @@ class CartScreen extends StatelessWidget {
       body: Consumer<CartProvider>(
         builder: (context, cart, child) {
           if (cart.items.isEmpty) {
-            return const Center(
+            return Center(
               child: Text(
                 'Your cart is empty',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.grey[600],
+                ),
               ),
             );
           }
@@ -41,7 +45,8 @@ class CartScreen extends StatelessWidget {
                           children: [
                             Text(
                               item.match,
-                              style: const TextStyle(
+                              style:  TextStyle(
+                                color: Colors.grey[600],
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -64,8 +69,9 @@ class CartScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Price: \$${item.price.toStringAsFixed(2)}',
-                                  style: const TextStyle(
+                                  'Price: ${CurrencyFormatter.formatRupiah(item.price)}',
+                                  style:  TextStyle(
+                                    color: Colors.grey[600],
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -84,7 +90,8 @@ class CartScreen extends StatelessWidget {
                                     ),
                                     Text(
                                       '${item.quantity}',
-                                      style: const TextStyle(
+                                      style: TextStyle(
+                                        color: const Color.fromARGB(255, 12, 1, 1),
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -101,7 +108,7 @@ class CartScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'Total: \$${item.total.toStringAsFixed(2)}',
+                              'Total: ${CurrencyFormatter.formatRupiah(item.total)}',
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -143,7 +150,7 @@ class CartScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '\$${cart.totalAmount.toStringAsFixed(2)}',
+                          CurrencyFormatter.formatRupiah(cart.totalAmount),
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
